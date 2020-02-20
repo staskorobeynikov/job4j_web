@@ -10,6 +10,7 @@
     <version>3.0</version>
     <modules>
         <module>echo</module>
+        <module>crud_servlet</module>
     </modules>
 
     <properties>

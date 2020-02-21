@@ -28,7 +28,7 @@ public class UserServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        resp.setContentType("test/html");
+        resp.setContentType("text/html");
         PrintWriter writer = resp.getWriter();
         writer.append(validate.findAll().toString());
         writer.flush();

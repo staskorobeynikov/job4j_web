@@ -1,37 +1,40 @@
 package ru.job4j.servlets;
 
+import ru.job4j.logic.Validate;
+import ru.job4j.logic.ValidateService;
+import ru.job4j.model.User;
+
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.PrintWriter;
 
 public class UserCreateServlet extends HttpServlet {
+
+    private final Validate validate = ValidateService.getINSTANCE();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         resp.setContentType("text/html");
-        PrintWriter writer = resp.getWriter();
+        resp.sendRedirect(String.format("%s/usercreate.jsp", req.getContextPath()));
+    }
 
-        writer.append("<!DOCTYPE html>"
-                + "<html lang=\"en\">"
-                + "<head>"
-                + "    <meta charset=\"UTF-8\">"
-                + "    <title>UserCreate</title>"
-                + "</head>"
-                + "<body>"
-                + "<form action='/store/users?action=add' method=post>"
-                + "ID : <input type='text' name='id'/>"
-                + "Name : <input type='text' name='name'/>"
-                + "Login : <input type='text' name='login'/>"
-                + "Email : <input type='text' name='email'/>"
-                + "CreateDate : <input type='text' name='createDate'/>"
-                + "<input type='submit'>"
-                + "</form>"
-                + "</body>"
-                + "</html>"
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws  IOException {
+        resp.setContentType("text/html");
+
+        Action add = new AddAction();
+
+        User user = new User(
+                req.getParameter("id"),
+                req.getParameter("name"),
+                req.getParameter("login"),
+                req.getParameter("email"),
+                req.getParameter("createDate")
         );
 
-        writer.flush();
+        add.execute(validate, user);
+
+        resp.sendRedirect(String.format("%s/list", req.getContextPath()));
     }
 }

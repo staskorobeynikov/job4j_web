@@ -48,6 +48,6 @@ public class UserServlet extends HttpServlet {
 
         actions.get(action).execute(validate, user);
 
-        doGet(req, resp);
+        resp.sendRedirect(String.format("%s/list", req.getContextPath()));
     }
 }

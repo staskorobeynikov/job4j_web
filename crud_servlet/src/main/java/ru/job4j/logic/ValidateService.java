@@ -1,6 +1,6 @@
 package ru.job4j.logic;
 
-import ru.job4j.memory.MemoryStore;
+import ru.job4j.memory.DBStore;
 import ru.job4j.memory.Store;
 import ru.job4j.model.User;
 
@@ -10,7 +10,7 @@ public class ValidateService implements Validate {
 
     private static final ValidateService INSTANCE = new ValidateService();
 
-    private final Store store = MemoryStore.getINSTANCE();
+    private final Store store = DBStore.getINSTANCE();
 
     public ValidateService() {
     }
@@ -33,7 +33,7 @@ public class ValidateService implements Validate {
     public boolean update(User user) {
         boolean result = false;
         if (store.findById(user) != null) {
-            store.add(user);
+            store.update(user);
             result = true;
         }
         return result;

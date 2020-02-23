@@ -37,13 +37,14 @@ public class DBStore implements Store {
 
     @Override
     public void add(User user) {
-        String query = "INSERT INTO users(name, login, email, create_date) VALUES (?, ?, ?, ?);";
+        String query = "INSERT INTO users(id, name, login, email, create_date) VALUES (?, ?, ?, ?, ?);";
         try (Connection connection = SOURCE.getConnection();
              PreparedStatement addPr = connection.prepareStatement(query)) {
-            addPr.setString(1, user.getName());
-            addPr.setString(2, user.getLogin());
-            addPr.setString(3, user.getEmail());
-            addPr.setString(4, user.getCreateDate());
+            addPr.setInt(1, Integer.parseInt(user.getId()));
+            addPr.setString(2, user.getName());
+            addPr.setString(3, user.getLogin());
+            addPr.setString(4, user.getEmail());
+            addPr.setString(5, user.getCreateDate());
             addPr.executeUpdate();
         } catch (SQLException e) {
             LOG.error(e.getMessage(), e);

@@ -43,7 +43,8 @@ public class UserServlet extends HttpServlet {
                 req.getParameter("name"),
                 req.getParameter("login"),
                 req.getParameter("email"),
-                req.getParameter("createDate")
+                req.getParameter("createDate"),
+                req.getParameter("image")
         );
 
         actions.get(action).execute(validate, user);

@@ -37,7 +37,7 @@ public class DBStore implements Store {
 
     @Override
     public void add(User user) {
-        String query = "INSERT INTO users(id, name, login, email, create_date) VALUES (?, ?, ?, ?, ?);";
+        String query = "INSERT INTO users(id, name, login, email, create_date, photo) VALUES (?, ?, ?, ?, ?, ?);";
         try (Connection connection = SOURCE.getConnection();
              PreparedStatement addPr = connection.prepareStatement(query)) {
             addPr.setInt(1, Integer.parseInt(user.getId()));
@@ -45,6 +45,7 @@ public class DBStore implements Store {
             addPr.setString(3, user.getLogin());
             addPr.setString(4, user.getEmail());
             addPr.setString(5, user.getCreateDate());
+            addPr.setString(6, user.getImage());
             addPr.executeUpdate();
         } catch (SQLException e) {
             LOG.error(e.getMessage(), e);
@@ -53,14 +54,15 @@ public class DBStore implements Store {
 
     @Override
     public void update(User user) {
-        String query = "UPDATE users SET name = ?, login = ?, email = ?, create_date = ? WHERE id = ?;";
+        String query = "UPDATE users SET name = ?, login = ?, email = ?, create_date = ?, photo = ? WHERE id = ?;";
         try (Connection connection = SOURCE.getConnection();
             PreparedStatement updatePr = connection.prepareStatement(query)) {
             updatePr.setString(1, user.getName());
             updatePr.setString(2, user.getLogin());
             updatePr.setString(3, user.getEmail());
             updatePr.setString(4, user.getCreateDate());
-            updatePr.setInt(5, Integer.parseInt(user.getId()));
+            updatePr.setString(5, user.getImage());
+            updatePr.setInt(6, Integer.parseInt(user.getId()));
             updatePr.executeUpdate();
         } catch (SQLException e) {
             LOG.error(e.getMessage(), e);
@@ -122,7 +124,8 @@ public class DBStore implements Store {
                         resultSet.getString("name"),
                         resultSet.getString("login"),
                         resultSet.getString("email"),
-                        resultSet.getString("create_date")
+                        resultSet.getString("create_date"),
+                        resultSet.getString("photo")
                 );
                 result.add(user);
             }

@@ -34,7 +34,8 @@ public class UserUpdateServlet extends HttpServlet {
                 req.getParameter("name"),
                 req.getParameter("login"),
                 req.getParameter("email"),
-                req.getParameter("createDate")
+                req.getParameter("createDate"),
+                req.getParameter("file")
         );
 
         update.execute(validate, user);

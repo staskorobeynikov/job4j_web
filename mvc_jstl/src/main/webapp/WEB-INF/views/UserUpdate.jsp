@@ -20,6 +20,11 @@
     Login: <label><input type="text" name="login" value="${find.login}"></label><br/><br/>
     Email: <label><input type="text" name="email" value="${find.email}"></label><br/><br/>
     CreateDate: <label><input type="text" name="createDate" value="${find.createDate}"></label><br/><br/>
+    Photo: <input type="file" name="file"><br/><br/>
+    <table>
+        <tr><th>Current photo</th></tr>
+        <tr><td><img src="${pageContext.servletContext.contextPath}/download?name=${find.image}" width="100px" height="100px"/></td></tr>
+    </table>
     <input type="submit">
 </form>
 </body>

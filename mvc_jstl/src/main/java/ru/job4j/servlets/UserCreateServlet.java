@@ -22,6 +22,8 @@ public class UserCreateServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws  IOException {
         resp.setContentType("text/html");
+//        String[] gggg = req.getParameterValues("file");
+//        System.out.println(gggg[0]);
 
         Action add = new AddAction();
 
@@ -30,7 +32,8 @@ public class UserCreateServlet extends HttpServlet {
                 req.getParameter("name"),
                 req.getParameter("login"),
                 req.getParameter("email"),
-                req.getParameter("createDate")
+                req.getParameter("createDate"),
+                req.getParameter("file")
         );
 
         add.execute(validate, user);

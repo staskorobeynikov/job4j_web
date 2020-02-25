@@ -12,12 +12,15 @@ public class User {
 
     private String createDate;
 
-    public User(String id, String name, String login, String email, String createDate) {
+    private String image;
+
+    public User(String id, String name, String login, String email, String createDate, String image) {
         this.id = id;
         this.name = name;
         this.login = login;
         this.email = email;
         this.createDate = createDate;
+        this.image = image;
     }
 
     public String getId() {
@@ -58,6 +61,10 @@ public class User {
 
     public void setCreateDate(String createDate) {
         this.createDate = createDate;
+    }
+
+    public String getImage() {
+        return image;
     }
 
     @Override

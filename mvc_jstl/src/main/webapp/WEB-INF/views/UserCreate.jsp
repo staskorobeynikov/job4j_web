@@ -18,6 +18,7 @@
     Login : <label><input type="text" name="login"></label><br/><br/>
     Email : <label><input type="text" name="email"></label><br/><br/>
     CreateDate : <label><input type='text' name="createDate"></label><br/><br/>
+    Photo : <input type="file" name="file">
     <input type="submit">
 </form>
 </body>

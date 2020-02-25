@@ -25,7 +25,13 @@
 <body>
 <table>
     <tr>
-        <th>ID</th><th>Name</th><th>Login</th><th>Email</th><th>CreateDate</th><th>Action</th>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Login</th>
+        <th>Email</th>
+        <th>CreateDate</th>
+        <th>PhotoID</th>
+        <th>Action</th>
     </tr>
     <c:forEach items="${users}" var="user">
         <tr>
@@ -34,6 +40,10 @@
             <td>${user.login}</td>
             <td>${user.email}</td>
             <td>${user.createDate}</td>
+            <td>
+                <a href="${pageContext.servletContext.contextPath}/download?name=${user.image}">Download</a>
+                <img src="${pageContext.servletContext.contextPath}/download?name=${user.image}" width="100px" height="100px"/>
+            </td>
             <td>
                 <form action="${pageContext.servletContext.contextPath}/users" method="post">
                     <input type="hidden" name="action" value="delete">

@@ -12,13 +12,15 @@
     <title>UserCreate</title>
 </head>
 <body>
-<form action="${pageContext.servletContext.contextPath}/" method="post">
-    ID: <label><input type="text" name="id"></label><br/><br/>
-    Name : <label><input type="text" name="name"></label><br/><br/>
-    Login : <label><input type="text" name="login"></label><br/><br/>
-    Email : <label><input type="text" name="email"></label><br/><br/>
-    CreateDate : <label><input type='text' name="createDate"></label><br/><br/>
-    Photo : <input type="file" name="file">
+<form action="${pageContext.servletContext.contextPath}/" method="post" enctype="multipart/form-data">
+    <table>
+        <tr><td>ID :</td><td><input type="text" name="id"></td></tr>
+        <tr><td>Name :</td><td><input type="text" name="name"></td></tr>
+        <tr><td>Login :</td><td><input type="text" name="login"></td></tr>
+        <tr><td>Email :</td><td><input type="text" name="email"></td></tr>
+        <tr><td>CreateDate :</td><td><input type='text' name="createDate"></td></tr>
+        <tr><td>Photo :</td><td><input type="file" name="file"></td></tr>
+    </table>
     <input type="submit">
 </form>
 </body>

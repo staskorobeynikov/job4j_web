@@ -41,8 +41,23 @@
             <td>${user.email}</td>
             <td>${user.createDate}</td>
             <td>
-                <a href="${pageContext.servletContext.contextPath}/download?name=${user.image}">Download</a>
-                <img src="${pageContext.servletContext.contextPath}/download?name=${user.image}" width="100px" height="100px"/>
+                <table>
+                    <tr>
+                        <td>
+                            <img src="${pageContext.servletContext.contextPath}/download?name=${user.image}" width="100px" height="100px"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="middle">
+                            ${user.image}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="middle">
+                            <a href="${pageContext.servletContext.contextPath}/download?name=${user.image}">Download</a>
+                        </td>
+                    </tr>
+                </table>
             </td>
             <td>
                 <form action="${pageContext.servletContext.contextPath}/users" method="post">

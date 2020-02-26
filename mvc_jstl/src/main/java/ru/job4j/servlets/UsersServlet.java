@@ -13,6 +13,10 @@ public class UsersServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
         req.setAttribute("users", ValidateService.getINSTANCE().findAll());
-        req.getRequestDispatcher("/WEB-INF/views/Users.jsp").forward(req, resp);
+        if (ValidateService.getINSTANCE().findAll().isEmpty()) {
+            req.getRequestDispatcher("/WEB-INF/views/UserCreate.jsp").forward(req, resp);
+        } else {
+            req.getRequestDispatcher("/WEB-INF/views/Users.jsp").forward(req, resp);
+        }
     }
 }

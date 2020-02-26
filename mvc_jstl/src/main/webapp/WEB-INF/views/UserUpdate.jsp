@@ -15,12 +15,14 @@
 </head>
 <body>
 <form action="${pageContext.servletContext.contextPath}/edit?id=${id}" method="post">
-    ID: <label><input type="text" name="id" value="${find.id}"></label><br/><br/>
-    Name: <label><input type="text" name="name" value="${find.name}"></label><br/><br/>
-    Login: <label><input type="text" name="login" value="${find.login}"></label><br/><br/>
-    Email: <label><input type="text" name="email" value="${find.email}"></label><br/><br/>
-    CreateDate: <label><input type="text" name="createDate" value="${find.createDate}"></label><br/><br/>
-    Photo: <input type="file" name="file"><br/><br/>
+    <table>
+        <tr><td>ID :</td><td><input type="text" name="id" value="${find.id}"></td></tr>
+        <tr><td>Name :</td><td><input type="text" name="name" value="${find.name}"></td></tr>
+        <tr><td>Login :</td><td><input type="text" name="login" value="${find.login}"></td></tr>
+        <tr><td>Email :</td><td><input type="text" name="email" value="${find.email}"></td></tr>
+        <tr><td>Create Date :</td><td><input type="text" name="createDate" value="${find.createDate}"></td></tr>
+    </table>
+    <input type="hidden" name="file" value="${find.image}">
     <table>
         <tr><th>Current photo</th></tr>
         <tr><td><img src="${pageContext.servletContext.contextPath}/download?name=${find.image}" width="100px" height="100px"/></td></tr>

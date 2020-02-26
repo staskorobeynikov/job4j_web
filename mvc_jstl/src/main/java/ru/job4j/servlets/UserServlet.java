@@ -7,8 +7,12 @@ import ru.job4j.model.User;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.HashMap;
 
 public class UserServlet extends HttpServlet {
@@ -46,6 +50,13 @@ public class UserServlet extends HttpServlet {
                 req.getParameter("createDate"),
                 req.getParameter("image")
         );
+
+        if (action.equals("delete")) {
+            File folder = new File("c:/bin/images");
+            User userDelete = validate.findById(user);
+            Path path = Paths.get(folder + File.separator + userDelete.getImage());
+            Files.delete(path);
+        }
 
         actions.get(action).execute(validate, user);
 

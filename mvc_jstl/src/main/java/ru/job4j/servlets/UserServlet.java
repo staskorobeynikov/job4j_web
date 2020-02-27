@@ -1,5 +1,6 @@
 package ru.job4j.servlets;
 
+import ru.job4j.logic.Config;
 import ru.job4j.logic.Validate;
 import ru.job4j.logic.ValidateService;
 import ru.job4j.model.User;
@@ -20,6 +21,8 @@ public class UserServlet extends HttpServlet {
     private final Validate validate = ValidateService.getINSTANCE();
 
     private final HashMap<String, Action> actions = new HashMap<>();
+
+    private final Config config = Config.getInstance();
 
     public UserServlet() {
         Action addAction = new AddAction();
@@ -52,7 +55,7 @@ public class UserServlet extends HttpServlet {
         );
 
         if (action.equals("delete")) {
-            File folder = new File("c:/bin/images");
+            File folder = new File(config.getProperty("photoID"));
             User userDelete = validate.findById(user);
             Path path = Paths.get(folder + File.separator + userDelete.getImage());
             Files.delete(path);

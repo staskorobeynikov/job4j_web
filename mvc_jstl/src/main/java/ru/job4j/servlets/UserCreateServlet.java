@@ -6,9 +6,9 @@ import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import ru.job4j.logic.Config;
 import ru.job4j.logic.Validate;
 import ru.job4j.logic.ValidateService;
-import ru.job4j.memory.DBStore;
 import ru.job4j.model.User;
 
 import javax.servlet.ServletContext;
@@ -19,14 +19,15 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 public class UserCreateServlet extends HttpServlet {
 
     private final Validate validate = ValidateService.getINSTANCE();
 
-    private static final Logger LOG = LogManager.getLogger(DBStore.class.getName());
+    private final Config config = Config.getInstance();
+
+    private static final Logger LOG = LogManager.getLogger(UserCreateServlet.class.getName());
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
@@ -49,17 +50,13 @@ public class UserCreateServlet extends HttpServlet {
         String photo = null;
         try {
             List<FileItem> items = upload.parseRequest(req);
-            File folder = new File("c:/bin/images");
+            File folder = new File(config.getProperty("photoID"));
             if (!folder.exists()) {
                 folder.mkdir();
             }
             for (FileItem item : items) {
                 if (!item.isFormField()) {
-                    photo = item.getName();
-                    while (isValidPhoto(photo)) {
-                        String[] photoSplit = photo.split("\\.");
-                        photo = String.format("%s_1.%s", photoSplit[0], photoSplit[1]);
-                    }
+                    photo = this.getNamePhoto(item.getName());
                     File file = new File(folder + File.separator + photo);
                     try (FileOutputStream out = new FileOutputStream(file)) {
                         out.write(item.getInputStream().readAllBytes());
@@ -95,16 +92,21 @@ public class UserCreateServlet extends HttpServlet {
         resp.sendRedirect(String.format("%s/list", req.getContextPath()));
     }
 
+    private String getNamePhoto(String filename) {
+        while (isValidPhoto(filename)) {
+            String[] photoSplit = filename.split("\\.");
+            filename = String.format("%s_1.%s", photoSplit[0], photoSplit[1]);
+        }
+        return filename;
+    }
+
     private boolean isValidPhoto(String filename) {
         boolean result = false;
-        List<String> listImage = new ArrayList<>();
         for (User user : validate.findAll()) {
             if (user.getImage().equals(filename)) {
-                listImage.add(user.getImage());
+               result = true;
+               break;
             }
-        }
-        if (listImage.size() > 0) {
-            result = true;
         }
         return result;
     }

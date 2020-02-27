@@ -58,4 +58,15 @@ public class ValidateService implements Validate {
     public User findById(User user) {
         return store.findById(user);
     }
+
+    public User isCredential(String login, String password) {
+        User result = null;
+        for (User user : this.findAll()) {
+            if (user.getLogin().equals(login) && user.getPassword().equals(password)) {
+                result = user;
+                break;
+            }
+        }
+        return result;
+    }
 }

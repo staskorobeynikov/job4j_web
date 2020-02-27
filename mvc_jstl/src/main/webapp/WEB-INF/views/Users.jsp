@@ -28,6 +28,8 @@
         <th>ID</th>
         <th>Name</th>
         <th>Login</th>
+        <th>Password</th>
+        <th>Role</th>
         <th>Email</th>
         <th>CreateDate</th>
         <th>PhotoID</th>
@@ -38,6 +40,8 @@
             <td>${user.id}</td>
             <td>${user.name}</td>
             <td>${user.login}</td>
+            <td>${user.password}</td>
+            <td>${user.roleName}</td>
             <td>${user.email}</td>
             <td>${user.createDate}</td>
             <td>
@@ -73,5 +77,11 @@
         </tr>
     </c:forEach>
 </table>
+<form action="${pageContext.servletContext.contextPath}/create" method="get">
+    <button type="submit" class="btn btn-default" style="background-color: lightgray">Add user</button>
+</form>
+<form action="${pageContext.servletContext.contextPath}/exit" method="post">
+    <button type="submit" class="btn btn-default" style="background-color: lightgray">Exit</button>
+</form>
 </body>
 </html>

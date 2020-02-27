@@ -37,15 +37,19 @@ public class DBStore implements Store {
 
     @Override
     public void add(User user) {
-        String query = "INSERT INTO users(id, name, login, email, create_date, photo) VALUES (?, ?, ?, ?, ?, ?);";
+        String query = "INSERT INTO users"
+                + "(id, name, login, password, email, create_date, photo, rolename) "
+                + "VALUES (?, ?, ?, ?, ?, ?, ?, ?);";
         try (Connection connection = SOURCE.getConnection();
              PreparedStatement addPr = connection.prepareStatement(query)) {
             addPr.setInt(1, Integer.parseInt(user.getId()));
             addPr.setString(2, user.getName());
             addPr.setString(3, user.getLogin());
-            addPr.setString(4, user.getEmail());
-            addPr.setString(5, user.getCreateDate());
-            addPr.setString(6, user.getImage());
+            addPr.setString(4, user.getPassword());
+            addPr.setString(5, user.getEmail());
+            addPr.setString(6, user.getCreateDate());
+            addPr.setString(7, user.getImage());
+            addPr.setString(8, user.getRoleName());
             addPr.executeUpdate();
         } catch (SQLException e) {
             LOG.error(e.getMessage(), e);
@@ -54,15 +58,17 @@ public class DBStore implements Store {
 
     @Override
     public void update(User user) {
-        String query = "UPDATE users SET name = ?, login = ?, email = ?, create_date = ?, photo = ? WHERE id = ?;";
+        String query = "UPDATE users SET name = ?, login = ?, password = ?, email = ?, create_date = ?, photo = ?, roleName = ? WHERE id = ?;";
         try (Connection connection = SOURCE.getConnection();
             PreparedStatement updatePr = connection.prepareStatement(query)) {
             updatePr.setString(1, user.getName());
             updatePr.setString(2, user.getLogin());
-            updatePr.setString(3, user.getEmail());
-            updatePr.setString(4, user.getCreateDate());
-            updatePr.setString(5, user.getImage());
-            updatePr.setInt(6, Integer.parseInt(user.getId()));
+            updatePr.setString(3, user.getPassword());
+            updatePr.setString(4, user.getEmail());
+            updatePr.setString(5, user.getCreateDate());
+            updatePr.setString(6, user.getImage());
+            updatePr.setString(7, user.getRoleName());
+            updatePr.setInt(8, Integer.parseInt(user.getId()));
             updatePr.executeUpdate();
         } catch (SQLException e) {
             LOG.error(e.getMessage(), e);
@@ -93,7 +99,6 @@ public class DBStore implements Store {
         } catch (SQLException e) {
             LOG.error(e.getMessage(), e);
         }
-
         return result;
     }
 
@@ -123,13 +128,14 @@ public class DBStore implements Store {
                         String.valueOf(resultSet.getInt("id")),
                         resultSet.getString("name"),
                         resultSet.getString("login"),
+                        resultSet.getString("password"),
                         resultSet.getString("email"),
                         resultSet.getString("create_date"),
-                        resultSet.getString("photo")
+                        resultSet.getString("photo"),
+                        resultSet.getString("rolename")
                 );
                 result.add(user);
             }
-
         } catch (SQLException e) {
             LOG.error(e.getMessage(), e);
         }

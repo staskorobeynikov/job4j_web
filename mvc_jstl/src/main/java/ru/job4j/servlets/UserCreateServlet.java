@@ -45,9 +45,11 @@ public class UserCreateServlet extends HttpServlet {
         String id = null;
         String name = null;
         String login = null;
+        String password = null;
         String email = null;
         String createDate = null;
         String photo = null;
+        String roleName = null;
         try {
             List<FileItem> items = upload.parseRequest(req);
             File folder = new File(config.getProperty("photoID"));
@@ -72,11 +74,17 @@ public class UserCreateServlet extends HttpServlet {
                         case "login":
                             login = item.getString();
                             break;
+                        case "password":
+                            password = item.getString();
+                            break;
                         case "email":
                             email = item.getString();
                             break;
                         case "createDate":
                             createDate = item.getString();
+                            break;
+                        case "rolename":
+                            roleName = item.getString();
                             break;
                     }
                 }
@@ -85,7 +93,7 @@ public class UserCreateServlet extends HttpServlet {
             LOG.error(e.getMessage(), e);
         }
 
-        User user = new User(id, name, login, email, createDate, photo);
+        User user = new User(id, name, login, password, email, createDate, photo, roleName);
 
         add.execute(validate, user);
 

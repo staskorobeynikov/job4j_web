@@ -25,17 +25,17 @@ public class UserUpdateServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        resp.setContentType("text/html");
-
         Action update = new UpdateAction();
 
         User user = new User(
                 req.getParameter("id"),
                 req.getParameter("name"),
                 req.getParameter("login"),
+                req.getParameter("password"),
                 req.getParameter("email"),
                 req.getParameter("createDate"),
-                req.getParameter("file")
+                req.getParameter("file"),
+                req.getParameter("rolename")
         );
 
         update.execute(validate, user);

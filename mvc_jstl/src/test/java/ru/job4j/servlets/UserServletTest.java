@@ -41,8 +41,8 @@ public class UserServletTest {
         when(ValidateService.getINSTANCE()).thenReturn(validate);
         when(req.getRequestDispatcher("/WEB-INF/views/Users.jsp")).thenReturn(dispatcher);
 
-        UsersServlet usersServlet = new UsersServlet();
-        usersServlet.doGet(req, response);
+        UserServlet userServlet = new UserServlet();
+        userServlet.doGet(req, response);
         verify(req).getRequestDispatcher("/WEB-INF/views/Users.jsp");
         verify(dispatcher).forward(req, response);
     }

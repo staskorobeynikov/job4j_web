@@ -86,6 +86,8 @@ public class UserCreateServlet extends HttpServlet {
                         case "rolename":
                             roleName = item.getString();
                             break;
+                        default:
+                            throw new IllegalStateException("Unexpected value: " + item.getFieldName());
                     }
                 }
             }

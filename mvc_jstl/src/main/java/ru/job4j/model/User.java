@@ -20,7 +20,8 @@ public class User {
 
     private String roleName;
 
-    public User(String id, String name, String login, String password, String email, String createDate, String image, String roleName) {
+    public User(String id, String name, String login, String password,
+                String email, String createDate, String image, String roleName) {
         this.id = id;
         this.name = name;
         this.login = login;
@@ -93,8 +94,12 @@ public class User {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         User user = (User) o;
         return Objects.equals(id, user.id)
                 && Objects.equals(name, user.name)

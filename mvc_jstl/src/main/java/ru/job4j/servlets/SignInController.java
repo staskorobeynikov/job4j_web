@@ -1,5 +1,6 @@
 package ru.job4j.servlets;
 
+import ru.job4j.logic.Validate;
 import ru.job4j.logic.ValidateService;
 import ru.job4j.model.User;
 
@@ -12,6 +13,8 @@ import java.io.IOException;
 
 public class SignInController extends HttpServlet {
 
+    private final Validate store = ValidateService.getINSTANCE();
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.getRequestDispatcher("/WEB-INF/views/Login.jsp").forward(req, resp);
@@ -21,7 +24,7 @@ public class SignInController extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String login = req.getParameter("login");
         String password = req.getParameter("password");
-        User findUser = ValidateService.getINSTANCE().isCredential(login, password);
+        User findUser = store.isCredential(login, password);
         if (findUser != null) {
             String roleUser = findUser.getRoleName();
             HttpSession session = req.getSession();

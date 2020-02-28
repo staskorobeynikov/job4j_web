@@ -5,12 +5,12 @@ import ru.job4j.logic.Validate;
 import ru.job4j.logic.ValidateService;
 import ru.job4j.model.User;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -34,11 +34,9 @@ public class UserServlet extends HttpServlet {
     }
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        resp.setContentType("text/html");
-        PrintWriter writer = resp.getWriter();
-        writer.append(validate.findAll().toString());
-        writer.flush();
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
+        req.setAttribute("users", ValidateService.getINSTANCE().findAll());
+        req.getRequestDispatcher("/WEB-INF/views/Users.jsp").forward(req, resp);
     }
 
     @Override
@@ -60,7 +58,9 @@ public class UserServlet extends HttpServlet {
             File folder = new File(config.getProperty("photoID"));
             User userDelete = validate.findById(user);
             Path path = Paths.get(folder + File.separator + userDelete.getImage());
-            Files.delete(path);
+            if (new File(String.valueOf(path)).exists()) {
+                Files.delete(path);
+            }
         }
 
         actions.get(action).execute(validate, user);

@@ -8,14 +8,14 @@ import java.util.List;
 
 public class ValidateService implements Validate {
 
-    private static final ValidateService INSTANCE = new ValidateService();
+    private static final Validate INSTANCE = new ValidateService();
 
     private final Store store = DBStore.getINSTANCE();
 
     public ValidateService() {
     }
 
-    public static ValidateService getINSTANCE() {
+    public static Validate getINSTANCE() {
         return INSTANCE;
     }
 
@@ -59,6 +59,7 @@ public class ValidateService implements Validate {
         return store.findById(user);
     }
 
+    @Override
     public User isCredential(String login, String password) {
         User result = null;
         for (User user : this.findAll()) {

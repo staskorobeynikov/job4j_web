@@ -19,7 +19,7 @@
 </style>
 <script>
     function validate() {
-        let checked;
+        let checked = false;
         let result = true;
         let answer = '';
         let elements = [$("#name"), $("#surname"), $("#description")];
@@ -31,7 +31,6 @@
         }
         let gender = document.querySelectorAll('input[type="radio"]');
         for (let i = 0; i < gender.length; i++) {
-            let checked = false;
             if (gender[i].checked) {
                 checked = true;
                 break;
@@ -45,6 +44,20 @@
             alert(answer);
         }
         return result;
+    }
+    function addRow() {
+        if (validate()) {
+            let name = $("#name").val();
+            let surname = $("#surname").val();
+            let description = $("#description").val();
+            let gender = $("input[type=radio]:checked").val();
+            $('#table tr:last').after('<tr>'
+                + '<td>' + name + '</td>'
+                + '<td>' + surname + '</td>'
+                + '<td>' + gender + '</td>'
+                + '<td>' + description + '</td>'
+                + '</tr>');
+        }
     }
 </script>
 <body>
@@ -81,10 +94,10 @@
                 <textarea class="form-control" rows="5" id="description" placeholder="Enter description"></textarea>
             </div>
         </div>
-        <button type="button" class="btn btn-default" onclick="return validate();">Submit</button>
+        <button type="button" class="btn btn-default" onclick="return addRow();">Add row</button>
     </form>
 </div>
-<table class="table-bordered">
+<table class="table-bordered" id="table">
     <thead>
     <tr>
         <th scope="col">Name</th>
@@ -93,14 +106,6 @@
         <th scope="col">Description</th>
     </tr>
     </thead>
-    <tbody>
-    <tr>
-        <td>Stas</td>
-        <td>Korobeynikov</td>
-        <td>Male</td>
-        <td>Description</td>
-    </tr>
-    </tbody>
 </table>
 </body>
 </html>

@@ -4,6 +4,7 @@ import ru.job4j.memory.DBStore;
 import ru.job4j.memory.Store;
 import ru.job4j.model.User;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ValidateService implements Validate {
@@ -67,6 +68,25 @@ public class ValidateService implements Validate {
                 result = user;
                 break;
             }
+        }
+        return result;
+    }
+
+    @Override
+    public List<String> getCountries() {
+        return store.getCountries();
+    }
+
+    @Override
+    public List<String> getCities(String country) {
+        return store.getCities(country);
+    }
+
+    @Override
+    public List<String> getLogins() {
+        List<String> result = new ArrayList<>();
+        for (User user : this.findAll()) {
+            result.add(user.getLogin());
         }
         return result;
     }

@@ -34,7 +34,11 @@ public class OneUserServletTest {
         RequestDispatcher dispatcher = mock(RequestDispatcher.class);
         HttpSession session = mock(HttpSession.class);
         Validate validate = new StubValidate();
-        validate.add(new User("1", "name", "root", "root", "root@mail.ru", "28.02.2020", "image", "user"));
+        validate.add(new User(
+                "1", "name", "root",
+                "root", "root@mail.ru", "28.02.2020",
+                "image", "user", "Belarus", "Minsk"
+        ));
         PowerMockito.mockStatic(ValidateService.class);
 
         when(req.getSession()).thenReturn(session);

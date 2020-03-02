@@ -44,4 +44,14 @@ public class MemoryStore implements Store {
     public User findById(User user) {
         return store.get(user.getId());
     }
+
+    @Override
+    public List<String> getCountries() {
+        return null;
+    }
+
+    @Override
+    public List<String> getCities(String country) {
+        return null;
+    }
 }

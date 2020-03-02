@@ -31,6 +31,7 @@ public class UserCreateServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
+        req.setAttribute("countries", validate.getCountries());
         req.getRequestDispatcher("/WEB-INF/views/UserCreate.jsp").forward(req, resp);
     }
 
@@ -50,6 +51,8 @@ public class UserCreateServlet extends HttpServlet {
         String createDate = null;
         String photo = null;
         String roleName = null;
+        String country = null;
+        String city = null;
         try {
             List<FileItem> items = upload.parseRequest(req);
             File folder = new File(config.getProperty("photoID"));
@@ -86,6 +89,12 @@ public class UserCreateServlet extends HttpServlet {
                         case "rolename":
                             roleName = item.getString();
                             break;
+                        case "country":
+                            country = item.getString();
+                            break;
+                        case "city":
+                            city = item.getString();
+                            break;
                         default:
                             throw new IllegalStateException("Unexpected value: " + item.getFieldName());
                     }
@@ -95,7 +104,12 @@ public class UserCreateServlet extends HttpServlet {
             LOG.error(e.getMessage(), e);
         }
 
-        User user = new User(id, name, login, password, email, createDate, photo, roleName);
+        User user = new User(
+                id, name, login,
+                password, email, createDate,
+                photo, roleName, country,
+                city
+        );
 
         add.execute(validate, user);
 

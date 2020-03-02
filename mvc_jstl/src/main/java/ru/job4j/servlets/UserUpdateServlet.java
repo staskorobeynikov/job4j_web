@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.List;
 
 public class UserUpdateServlet extends HttpServlet {
 
@@ -20,6 +21,8 @@ public class UserUpdateServlet extends HttpServlet {
         User find = this.findUser(id);
         req.setAttribute("find", find);
         req.setAttribute("id", id);
+        List<String> countries = validate.getCountries();
+        req.setAttribute("listCountries", countries);
         req.getRequestDispatcher("/WEB-INF/views/UserUpdate.jsp").forward(req, resp);
     }
 
@@ -35,7 +38,9 @@ public class UserUpdateServlet extends HttpServlet {
                 req.getParameter("email"),
                 req.getParameter("createDate"),
                 req.getParameter("file"),
-                req.getParameter("rolename")
+                req.getParameter("rolename"),
+                req.getParameter("country"),
+                req.getParameter("city")
         );
 
         update.execute(validate, user);

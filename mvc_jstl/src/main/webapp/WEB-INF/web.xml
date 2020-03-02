@@ -120,4 +120,24 @@
         <url-pattern>/greet</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>CitiesServlet</servlet-name>
+        <servlet-class>ru.job4j.servlets.CitiesServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>CitiesServlet</servlet-name>
+        <url-pattern>/cities</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>LoginValidServlet</servlet-name>
+        <servlet-class>ru.job4j.servlets.LoginValidServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>LoginValidServlet</servlet-name>
+        <url-pattern>/logins</url-pattern>
+    </servlet-mapping>
+
 </web-app>

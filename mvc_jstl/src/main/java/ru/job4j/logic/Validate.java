@@ -17,4 +17,10 @@ public interface Validate {
     User findById(User user);
 
     User isCredential(String login, String password);
+
+    List<String> getCountries();
+
+    List<String> getCities(String country);
+
+    List<String> getLogins();
 }

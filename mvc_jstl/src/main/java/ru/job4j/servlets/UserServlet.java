@@ -51,7 +51,9 @@ public class UserServlet extends HttpServlet {
                 req.getParameter("email"),
                 req.getParameter("createDate"),
                 req.getParameter("image"),
-                req.getParameter("rolename")
+                req.getParameter("rolename"),
+                req.getParameter("country"),
+                req.getParameter("city")
         );
 
         if (action.equals("delete")) {

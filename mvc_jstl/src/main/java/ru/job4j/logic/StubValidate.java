@@ -49,4 +49,19 @@ public class StubValidate implements Validate {
         }
         return result;
     }
+
+    @Override
+    public List<String> getCountries() {
+        return null;
+    }
+
+    @Override
+    public List<String> getCities(String country) {
+        return null;
+    }
+
+    @Override
+    public List<String> getLogins() {
+        return null;
+    }
 }

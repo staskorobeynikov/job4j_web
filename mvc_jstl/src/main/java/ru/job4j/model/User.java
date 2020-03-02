@@ -20,8 +20,13 @@ public class User {
 
     private String roleName;
 
+    private String country;
+
+    private String city;
+
     public User(String id, String name, String login, String password,
-                String email, String createDate, String image, String roleName) {
+                String email, String createDate, String image,
+                String roleName, String country, String city) {
         this.id = id;
         this.name = name;
         this.login = login;
@@ -30,6 +35,8 @@ public class User {
         this.createDate = createDate;
         this.image = image;
         this.roleName = roleName;
+        this.country = country;
+        this.city = city;
     }
 
     public String getId() {
@@ -76,10 +83,6 @@ public class User {
         return createDate;
     }
 
-    public void setCreateDate(String createDate) {
-        this.createDate = createDate;
-    }
-
     public String getImage() {
         return image;
     }
@@ -88,8 +91,12 @@ public class User {
         return roleName;
     }
 
-    public void setRoleName(String roleName) {
-        this.roleName = roleName;
+    public String getCountry() {
+        return country;
+    }
+
+    public String getCity() {
+        return city;
     }
 
     @Override
@@ -108,25 +115,40 @@ public class User {
                 && Objects.equals(email, user.email)
                 && Objects.equals(createDate, user.createDate)
                 && Objects.equals(image, user.image)
-                && Objects.equals(roleName, user.roleName);
+                && Objects.equals(roleName, user.roleName)
+                && Objects.equals(country, user.country)
+                && Objects.equals(city, user.city);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, login, password, email, createDate, image, roleName);
-    }
-
-    @Override
-    public String toString() {
-        return String.format(
-                "User: id=%s, name=%s, login=%s, password=%s, email=%s, createDate=%s, rolename=%s",
+        return Objects.hash(
                 id,
                 name,
                 login,
                 password,
                 email,
                 createDate,
-                roleName
+                image,
+                roleName,
+                country,
+                city
+        );
+    }
+
+    @Override
+    public String toString() {
+        return String.format(
+                "User: id=%s, name=%s, login=%s, password=%s, email=%s, createDate=%s, rolename=%s, country=%s, city=%s",
+                id,
+                name,
+                login,
+                password,
+                email,
+                createDate,
+                roleName,
+                country,
+                city
         );
 
     }

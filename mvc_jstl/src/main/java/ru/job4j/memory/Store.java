@@ -15,4 +15,8 @@ public interface Store {
     List<User> findAll();
 
     User findById(User user);
+
+    List<String> getCountries();
+
+    List<String> getCities(String country);
 }

@@ -44,7 +44,11 @@ public class SignInControllerTest {
     @Test
     public void whenUserIsValidateAndInAccountUser() throws ServletException, IOException {
         Validate validate = new StubValidate();
-        validate.add(new User("1", "name", "root", "root", "root@mail.ru", "28.02.2020", "image", "admin"));
+        validate.add(new User(
+                "1", "name", "root",
+                "root", "root@mail.ru", "28.02.2020",
+                "image", "user", "Belarus", "Minsk"
+        ));
         PowerMockito.mockStatic(ValidateService.class);
         when(ValidateService.getINSTANCE()).thenReturn(validate);
 
@@ -69,7 +73,11 @@ public class SignInControllerTest {
     @Test
     public void whenUserIsNotValidateAndNotInAccountUser() throws ServletException, IOException {
         Validate validate = new StubValidate();
-        validate.add(new User("1", "name", "root", "root", "root@mail.ru", "28.02.2020", "image", "admin"));
+        validate.add(new User(
+                "1", "name", "root",
+                "root", "root@mail.ru", "28.02.2020",
+                "image", "user", "Belarus", "Minsk"
+        ));
         PowerMockito.mockStatic(ValidateService.class);
         when(ValidateService.getINSTANCE()).thenReturn(validate);
 
@@ -87,5 +95,4 @@ public class SignInControllerTest {
         SignInController signInController = new SignInController();
         signInController.doPost(req, response);
     }
-
 }

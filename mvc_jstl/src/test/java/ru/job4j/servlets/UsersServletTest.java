@@ -47,7 +47,11 @@ public class UsersServletTest {
     @Test
     public void whenStoreUsersIsNotEmptyAndRedirectOnPageViewUsers() throws ServletException, IOException {
         Validate validate = new StubValidate();
-        validate.add(new User("1", "name", "root", "root", "root@mail.ru", "28.02.2020", "image", "admin"));
+        validate.add(new User(
+                "1", "name", "root",
+                "root", "root@mail.ru", "28.02.2020",
+                "image", "user", "Belarus", "Minsk"
+        ));
         PowerMockito.mockStatic(ValidateService.class);
         HttpServletRequest req = mock(HttpServletRequest.class);
         HttpServletResponse response = mock(HttpServletResponse.class);

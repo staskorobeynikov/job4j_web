@@ -31,7 +31,9 @@ public class UserServletTest {
     public void whenMethodDoGetAndRedirectOnPageUsers() throws IOException, ServletException {
         Validate validate = new StubValidate();
         validate.add(new User(
-                "1", "name", "root", "root", "root@mail.ru", "28.02.2020", "image", "admin"
+                "1", "name", "root",
+                "root", "root@mail.ru", "28.02.2020",
+                "image", "user", "Belarus", "Minsk"
         ));
         PowerMockito.mockStatic(ValidateService.class);
         HttpServletRequest req = mock(HttpServletRequest.class);
@@ -83,10 +85,14 @@ public class UserServletTest {
     public void whenMethodDoPostActionIsDeleteFirstUser() throws IOException {
         Validate validate = new StubValidate();
         validate.add(new User(
-                "1", "name", "root", "root", "root@mail.ru", "28.02.2020", "img", "admin"
+                "1", "name", "root",
+                "root", "root@mail.ru", "28.02.2020",
+                "image", "user", "Belarus", "Minsk"
         ));
         validate.add(new User(
-                "2", "name2", "root1", "root1", "root1@mail.ru", "29.02.2020", "img1", "user"
+                "2", "name2", "root1",
+                "root1", "root1@mail.ru", "29.02.2020",
+                "img1", "user", "Belarus", "Minsk"
         ));
 
         PowerMockito.mockStatic(ValidateService.class);

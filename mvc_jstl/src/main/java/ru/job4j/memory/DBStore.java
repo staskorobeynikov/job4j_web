@@ -38,8 +38,9 @@ public class DBStore implements Store {
     @Override
     public void add(User user) {
         String query = "INSERT INTO users"
-                + "(id, name, login, password, email, create_date, photo, rolename) "
-                + "VALUES (?, ?, ?, ?, ?, ?, ?, ?);";
+                + "(id, name, login, password, email, create_date, photo, "
+                + "rolename, country, city) "
+                + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
         try (Connection connection = SOURCE.getConnection();
              PreparedStatement addPr = connection.prepareStatement(query)) {
             addPr.setInt(1, Integer.parseInt(user.getId()));
@@ -50,6 +51,8 @@ public class DBStore implements Store {
             addPr.setString(6, user.getCreateDate());
             addPr.setString(7, user.getImage());
             addPr.setString(8, user.getRoleName());
+            addPr.setString(9, user.getCountry());
+            addPr.setString(10, user.getCity());
             addPr.executeUpdate();
         } catch (SQLException e) {
             LOG.error(e.getMessage(), e);
@@ -58,7 +61,9 @@ public class DBStore implements Store {
 
     @Override
     public void update(User user) {
-        String query = "UPDATE users SET name = ?, login = ?, password = ?, email = ?, create_date = ?, photo = ?, roleName = ? WHERE id = ?;";
+        String query = "UPDATE users SET name = ?, login = ?, password = ?, "
+                + "email = ?, create_date = ?, photo = ?, roleName = ?, "
+                + "country = ?, city = ? WHERE id = ?;";
         try (Connection connection = SOURCE.getConnection();
             PreparedStatement updatePr = connection.prepareStatement(query)) {
             updatePr.setString(1, user.getName());
@@ -68,7 +73,9 @@ public class DBStore implements Store {
             updatePr.setString(5, user.getCreateDate());
             updatePr.setString(6, user.getImage());
             updatePr.setString(7, user.getRoleName());
-            updatePr.setInt(8, Integer.parseInt(user.getId()));
+            updatePr.setString(8, user.getCountry());
+            updatePr.setString(9, user.getCity());
+            updatePr.setInt(10, Integer.parseInt(user.getId()));
             updatePr.executeUpdate();
         } catch (SQLException e) {
             LOG.error(e.getMessage(), e);
@@ -120,6 +127,42 @@ public class DBStore implements Store {
         return result;
     }
 
+    @Override
+    public List<String> getCountries() {
+        List<String> result = new ArrayList<>();
+        String query = "SELECT name FROM country;";
+        try (Connection connection = SOURCE.getConnection();
+             PreparedStatement countryPr = connection.prepareStatement(query)) {
+            ResultSet resultSet = countryPr.executeQuery();
+            while (resultSet.next()) {
+                result.add(resultSet.getString("name"));
+            }
+
+        } catch (SQLException e) {
+            LOG.error(e.getMessage(), e);
+        }
+        return result;
+    }
+
+    @Override
+    public List<String> getCities(String country) {
+        List<String> result = new ArrayList<>();
+        String query = "select c.name from city as c\n" +
+                "inner join country on c.country_id = country.id\n" +
+                "where country.name = ?;";
+        try (Connection connection = SOURCE.getConnection();
+             PreparedStatement cityPr = connection.prepareStatement(query)) {
+            cityPr.setString(1, country);
+            ResultSet resultSet = cityPr.executeQuery();
+            while (resultSet.next()) {
+                result.add(resultSet.getString("name"));
+            }
+        } catch (SQLException e) {
+           LOG.error(e.getMessage(), e);
+        }
+        return result;
+    }
+
     private List<User> getResult(ResultSet resultSet) {
         List<User> result = new ArrayList<>();
         try {
@@ -132,7 +175,9 @@ public class DBStore implements Store {
                         resultSet.getString("email"),
                         resultSet.getString("create_date"),
                         resultSet.getString("photo"),
-                        resultSet.getString("rolename")
+                        resultSet.getString("rolename"),
+                        resultSet.getString("country"),
+                        resultSet.getString("city")
                 );
                 result.add(user);
             }

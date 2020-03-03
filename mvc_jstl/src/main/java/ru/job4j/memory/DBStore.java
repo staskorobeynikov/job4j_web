@@ -147,9 +147,9 @@ public class DBStore implements Store {
     @Override
     public List<String> getCities(String country) {
         List<String> result = new ArrayList<>();
-        String query = "select c.name from city as c\n" +
-                "inner join country on c.country_id = country.id\n" +
-                "where country.name = ?;";
+        String query = "select c.name from city as c\n"
+                + "inner join country on c.country_id = country.id\n"
+                + "where country.name = ?;";
         try (Connection connection = SOURCE.getConnection();
              PreparedStatement cityPr = connection.prepareStatement(query)) {
             cityPr.setString(1, country);

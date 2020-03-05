@@ -49,9 +49,9 @@ public class Place {
             return false;
         }
         Place place1 = (Place) o;
-        return row == place1.row &&
-                place == place1.place &&
-                Objects.equals(name, place1.name);
+        return row == place1.row
+                && place == place1.place
+                && Objects.equals(name, place1.name);
     }
 
     @Override

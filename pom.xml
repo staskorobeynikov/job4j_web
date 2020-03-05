@@ -12,6 +12,7 @@
         <module>echo</module>
         <module>crud_servlet</module>
         <module>mvc_jstl</module>
+        <module>cinema</module>
     </modules>
 
     <properties>

@@ -1,5 +1,6 @@
 package ru.job4j.memory;
 
+import ru.job4j.model.Account;
 import ru.job4j.model.Place;
 
 import java.util.List;
@@ -11,5 +12,5 @@ public interface Store {
 
     Set<Place> getOccupiedPlaces();
 
-    void addVisitorPlace(String fio, String phone, int id);
+    boolean addVisitorPlace(Account account, Place place);
 }

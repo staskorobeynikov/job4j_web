@@ -3,6 +3,7 @@ package ru.job4j.memory;
 import org.apache.commons.dbcp2.BasicDataSource;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import ru.job4j.model.Account;
 import ru.job4j.model.Place;
 
 import java.sql.Connection;
@@ -81,16 +82,27 @@ public class DBStore implements Store {
     }
 
     @Override
-    public void addVisitorPlace(String fio, String phone, int id) {
+    public boolean addVisitorPlace(Account account, Place place) {
+        boolean result = false;
         String query = "INSERT INTO accounts(fio, phone, place_id) values (?, ?, ?)";
+        String validQuery = "SELECT * FROM accounts WHERE place_id = ?";
         try (Connection connection = SOURCE.getConnection();
-             PreparedStatement insertPr = connection.prepareStatement(query)) {
-            insertPr.setString(1, fio);
-            insertPr.setString(2, phone);
-            insertPr.setInt(3, id);
-            insertPr.executeUpdate();
+             PreparedStatement insertPr = connection.prepareStatement(query);
+             PreparedStatement selectPr = connection.prepareStatement(validQuery)) {
+            insertPr.setString(1, account.getFio());
+            insertPr.setString(2, account.getPhone());
+            int placeId = place.getRow() * 10 + place.getPlace();
+            insertPr.setInt(3, placeId);
+
+            selectPr.setInt(1, placeId);
+            ResultSet resultSet = selectPr.executeQuery();
+            if (!resultSet.next()) {
+                insertPr.executeUpdate();
+                result = true;
+            }
         } catch (SQLException e) {
             LOG.error(e.getMessage(), e);
         }
+        return result;
     }
 }

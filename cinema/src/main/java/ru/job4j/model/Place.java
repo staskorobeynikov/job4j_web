@@ -20,24 +20,12 @@ public class Place {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public int getRow() {
         return row;
     }
 
-    public void setRow(int row) {
-        this.row = row;
-    }
-
     public int getPlace() {
         return place;
-    }
-
-    public void setPlace(int place) {
-        this.place = place;
     }
 
     @Override
@@ -61,6 +49,8 @@ public class Place {
 
     @Override
     public String toString() {
-        return String.format("Place: name=%s, row=%s, place=%s", name, row, place);
+        return String.format(
+                "Place: name=%s, row=%s, place=%s", name, row, place
+        );
     }
 }

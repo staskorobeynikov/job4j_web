@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -45,8 +46,12 @@
                 method: 'POST',
                 url: './payment',
                 data: {id : getPlaceId(), name : $('#username').val(), phone : $('#phone').val()},
-                success: function (result) {
-                    console.log(result);
+                dataType: 'json',
+                success: function ($data) {
+                    if ($data['error'] !== '') {
+                        alert($data['error']);
+                        window.location.href = "/cinema/index.html";
+                    }
                 }
             })
         );

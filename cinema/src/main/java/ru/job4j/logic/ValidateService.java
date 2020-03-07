@@ -2,6 +2,7 @@ package ru.job4j.logic;
 
 import ru.job4j.memory.DBStore;
 import ru.job4j.memory.Store;
+import ru.job4j.model.Account;
 import ru.job4j.model.Place;
 
 import java.util.List;
@@ -31,7 +32,7 @@ public class ValidateService implements Validate {
     }
 
     @Override
-    public void addVisitorPlace(String fio, String phone, int id) {
-        store.addVisitorPlace(fio, phone, id);
+    public boolean addVisitorPlace(Account account, Place place) {
+        return store.addVisitorPlace(account, place);
     }
 }

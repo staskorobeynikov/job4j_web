@@ -1,21 +1,39 @@
 package ru.job4j.servlets;
 
+import com.google.gson.Gson;
 import ru.job4j.logic.Validate;
 import ru.job4j.logic.ValidateService;
+import ru.job4j.model.Account;
+import ru.job4j.model.Place;
 
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 public class PaymentServlet extends HttpServlet {
 
     private final Validate validate = ValidateService.getInstance();
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) {
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         String id = req.getParameter("id");
+        int row = Integer.parseInt(String.valueOf(id.charAt(0)));
+        int place = Integer.parseInt(String.valueOf(id.charAt(1)));
+        String name = String.format("Ряд %s, место %s", row, place);
+        Place placeForAccount = new Place(name, row, place);
         String fio = req.getParameter("name");
         String phone = req.getParameter("phone");
-        validate.addVisitorPlace(fio, phone, Integer.parseInt(id));
+        Account account = new Account(fio, phone);
+        boolean result = validate.addVisitorPlace(account, placeForAccount);
+        if (!result) {
+            Map<String, String> error = new HashMap<>();
+            error.put("error", "Place is occupied. Please, try again.");
+            String json = new Gson().toJson(error);
+            resp.setContentType("json");
+            resp.getWriter().write(json);
+        }
     }
 }

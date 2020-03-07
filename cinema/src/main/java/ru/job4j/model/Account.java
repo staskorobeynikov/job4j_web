@@ -30,8 +30,8 @@ public class Account {
             return false;
         }
         Account account = (Account) o;
-        return Objects.equals(fio, account.fio) &&
-                Objects.equals(phone, account.phone);
+        return Objects.equals(fio, account.fio)
+                && Objects.equals(phone, account.phone);
     }
 
     @Override

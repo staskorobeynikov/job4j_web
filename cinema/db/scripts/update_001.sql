@@ -16,3 +16,5 @@ CREATE TABLE accounts(
 	phone varchar(250) not null,
 	place_id integer references halls(id)
 );
+
+ALTER TABLE accounts ADD CONSTRAINT place_unique UNIQUE (place_id);

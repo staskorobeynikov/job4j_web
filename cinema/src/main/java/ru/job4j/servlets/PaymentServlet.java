@@ -28,12 +28,14 @@ public class PaymentServlet extends HttpServlet {
         String phone = req.getParameter("phone");
         Account account = new Account(fio, phone);
         boolean result = validate.addVisitorPlace(account, placeForAccount);
+        Map<String, String> answer = new HashMap<>();
         if (!result) {
-            Map<String, String> error = new HashMap<>();
-            error.put("error", "Place is occupied. Please, try again.");
-            String json = new Gson().toJson(error);
-            resp.setContentType("json");
-            resp.getWriter().write(json);
+            answer.put("answer", "Place is occupied. Please, try again.");
+        } else {
+            answer.put("answer", "Reservation successful.");
         }
+        String json = new Gson().toJson(answer);
+        resp.setContentType("json");
+        resp.getWriter().write(json);
     }
 }

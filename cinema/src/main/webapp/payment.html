@@ -31,7 +31,6 @@
         $('#payment').click(function () {
             if (validate()) {
                 payment();
-                window.location.href = "/cinema/index.html";
             }
         })
     });
@@ -41,20 +40,21 @@
     }
 
     function payment() {
-        $(
-            $.ajax({
-                method: 'POST',
-                url: './payment',
-                data: {id : getPlaceId(), name : $('#username').val(), phone : $('#phone').val()},
-                dataType: 'json',
-                success: function ($data) {
-                    if ($data['error'] !== '') {
-                        alert($data['error']);
+        $.ajax({
+            method: 'POST',
+            url: './payment',
+            data: {id : getPlaceId(), name : $('#username').val(), phone : $('#phone').val()},
+            dataType: 'json',
+            success: function ($data) {
+                console.log($data);
+                if ($data['answer'] !== '') {
+                    alert($data['answer']);
+                    setTimeout(function () {
                         window.location.href = "/cinema/index.html";
-                    }
+                    }, 1000);
                 }
-            })
-        );
+            }
+        });
     }
 
     function validate() {
@@ -63,7 +63,7 @@
         let elements = [$("#username"), $("#phone")];
         for (let i = 0; i < elements.length; i++) {
             if (elements[i].val() === '') {
-                answer += elements[i].attr("placeholder") + "\n";
+                answer += "Please, "  + elements[i].attr("placeholder").toLowerCase() + "\n";
                 result = false;
             }
         }
@@ -78,19 +78,25 @@
         <h3>
         </h3>
     </div>
-    <div class="row">
-        <form>
-            <div class="form-group">
-                <label for="username">ФИО</label>
-                <input type="text" class="form-control" id="username" placeholder="Введите ФИО">
+    <form class="form-horizontal">
+        <div class="form-group">
+            <label class="control-label col-sm-4" for="username">Your name and surname:</label>
+            <div class="col-sm-5">
+                <input type="text" class="form-control" id="username" placeholder="Enter your name and surname">
             </div>
-            <div class="form-group">
-                <label for="phone">Номер телефона</label>
-                <input type="text" class="form-control" id="phone" placeholder="Введите номер телефона">
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="phone">Phone number:</label>
+            <div class="col-sm-5">
+                <input type="text" class="form-control" id="phone" placeholder="Enter your phone number">
             </div>
-            <button id="payment" type="button" class="btn btn-success">Оплатить</button>
-        </form>
-    </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-5">
+                <button id="payment" type="button" class="btn btn-success">Оплатить</button>
+            </div>
+        </div>
+    </form>
 </div>
 </body>
 </html>

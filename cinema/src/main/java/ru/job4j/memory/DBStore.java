@@ -85,23 +85,39 @@ public class DBStore implements Store {
     public boolean addVisitorPlace(Account account, Place place) {
         boolean result = false;
         String query = "INSERT INTO accounts(fio, phone, place_id) values (?, ?, ?)";
-        String validQuery = "SELECT * FROM accounts WHERE place_id = ?";
-        try (Connection connection = SOURCE.getConnection();
-             PreparedStatement insertPr = connection.prepareStatement(query);
-             PreparedStatement selectPr = connection.prepareStatement(validQuery)) {
+        Connection connection = null;
+        PreparedStatement insertPr = null;
+        try {
+            connection = SOURCE.getConnection();
+            connection.setAutoCommit(false);
+            insertPr = connection.prepareStatement(query);
             insertPr.setString(1, account.getFio());
             insertPr.setString(2, account.getPhone());
             int placeId = place.getRow() * 10 + place.getPlace();
             insertPr.setInt(3, placeId);
-
-            selectPr.setInt(1, placeId);
-            ResultSet resultSet = selectPr.executeQuery();
-            if (!resultSet.next()) {
-                insertPr.executeUpdate();
-                result = true;
+            insertPr.executeUpdate();
+            connection.commit();
+            result = true;
+        } catch (Exception e) {
+            try {
+                if (connection != null) {
+                    connection.rollback();
+                }
+            } catch (SQLException ex) {
+                LOG.error(ex.getMessage(), ex);
             }
-        } catch (SQLException e) {
             LOG.error(e.getMessage(), e);
+        } finally {
+            try {
+                if (insertPr != null) {
+                    insertPr.close();
+                }
+                if (connection != null) {
+                    connection.setAutoCommit(true);
+                }
+            } catch (SQLException e) {
+                LOG.error(e.getMessage(), e);
+            }
         }
         return result;
     }

@@ -40,6 +40,10 @@ public class MemoryStore implements Store {
     @Override
     public boolean addVisitorPlace(Account account, Place place) {
         store.putIfAbsent(place, account);
-        return store.size() > 2;
+        boolean result = false;
+        if (store.get(place).getFio().equals(account.getFio())) {
+            result = true;
+        }
+        return result;
     }
 }

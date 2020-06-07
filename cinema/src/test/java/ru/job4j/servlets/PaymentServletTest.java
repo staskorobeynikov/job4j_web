@@ -27,7 +27,35 @@ import static org.mockito.Mockito.when;
 public class PaymentServletTest {
 
     @Test
-    public void whenCallMethodDoPostResponseContainsJSONTypeData() throws IOException {
+    public void whenCallMethodDoPostResponseContainsJSONTypeDataReservationSuccessful() throws IOException {
+        Validate validate = new StubValidate();
+
+        StringWriter stringWriter = new StringWriter();
+        stringWriter.write("");
+        PrintWriter writer = new PrintWriter(stringWriter);
+
+        PowerMockito.mockStatic(ValidateService.class);
+        HttpServletRequest req = mock(HttpServletRequest.class);
+        HttpServletResponse response = mock(HttpServletResponse.class);
+
+        when(ValidateService.getInstance()).thenReturn(validate);
+        when(response.getWriter()).thenReturn(writer);
+        when(req.getParameter("id")).thenReturn("13");
+        when(req.getParameter("name")).thenReturn("Sergey");
+        when(req.getParameter("phone")).thenReturn("+375297776655");
+
+        new PaymentServlet().doPost(req, response);
+
+        String string = stringWriter.toString();
+        writer.flush();
+
+        String expected = "{\"answer\":\"Reservation successful.\"}";
+
+        assertThat(string, is(expected));
+    }
+
+    @Test
+    public void whenCallMethodDoPostResponseContainsJSONTypeDataPlaceIsOccupied() throws IOException {
         Validate validate = new StubValidate();
 
         StringWriter stringWriter = new StringWriter();

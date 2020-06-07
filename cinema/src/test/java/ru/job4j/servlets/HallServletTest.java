@@ -28,7 +28,7 @@ import static org.mockito.Mockito.when;
 public class HallServletTest {
 
     @Test
-    public void whenCallMethodDoGetThenResponseContainsDataJSONType() throws IOException {
+    public void whenCallMethodDoGetThenResponseContainsDataJSONTypeWithOnePlaceOccupied() throws IOException {
         Validate validate = new StubValidate();
 
         StringWriter stringWriter = new StringWriter();
@@ -47,10 +47,8 @@ public class HallServletTest {
         String string = stringWriter.toString();
         writer.flush();
 
-        String expected = "{\"11\":true}";
+        String expected = "{\"11\":true,\"12\":false}";
 
         assertThat(string, is(expected));
     }
-
-
 }

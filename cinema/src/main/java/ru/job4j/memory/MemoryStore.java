@@ -3,10 +3,7 @@ package ru.job4j.memory;
 import ru.job4j.model.Account;
 import ru.job4j.model.Place;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class MemoryStore implements Store {
@@ -16,7 +13,8 @@ public class MemoryStore implements Store {
     private final Map<Place, Account> store = new ConcurrentHashMap<>();
 
     public MemoryStore() {
-        store.put(new Place("place11", 1, 1), new Account("Stas", "+375296666666"));
+        store.put(new Place("Ряд 1, место 1", 1, 1), new Account("Stas", "+375296666666"));
+        store.put(new Place("Ряд 1, место 2", 1, 2), new Account("", ""));
     }
 
     public static MemoryStore getInstance() {
@@ -30,12 +28,18 @@ public class MemoryStore implements Store {
 
     @Override
     public Set<Place> getOccupiedPlaces() {
-        return store.keySet();
+        Set<Place> result = new HashSet<>();
+        for (Place place : store.keySet()) {
+            if (!store.get(place).getFio().equals("")) {
+                result.add(place);
+            }
+        }
+        return result;
     }
 
     @Override
     public boolean addVisitorPlace(Account account, Place place) {
-        Account addNewAccount = store.putIfAbsent(place, account);
-        return addNewAccount != null;
+        store.putIfAbsent(place, account);
+        return store.size() > 2;
     }
 }

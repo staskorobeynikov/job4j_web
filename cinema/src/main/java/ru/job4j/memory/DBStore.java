@@ -21,7 +21,7 @@ public class DBStore implements Store {
 
     private static final BasicDataSource SOURCE = new BasicDataSource();
 
-    private static final DBStore INSTANCE = new DBStore();
+    private static final Store INSTANCE = new DBStore();
 
     public DBStore() {
         SOURCE.setDriverClassName("org.postgresql.Driver");
@@ -33,7 +33,7 @@ public class DBStore implements Store {
         SOURCE.setMaxOpenPreparedStatements(100);
     }
 
-    public static DBStore getInstance() {
+    public static Store getInstance() {
         return INSTANCE;
     }
 
